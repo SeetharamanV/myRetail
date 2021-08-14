@@ -1,20 +1,20 @@
 swagger: '2.0'
 info:
-  description: MyRetail Prices Core API
-  title: MyRetail Prices Core API
+  description: MyRetail Details Aggregation API
+  title: MyRetail Details Aggregation API
   version: '1.0'
 host: 'localhost:9090'
 basePath: /my_retail
 tags:
-  - name: prices-controller
-    description: Prices Controller
+  - name: details-controller
+    description: Details Controller
 paths:
-  '/v1/products/{product_id}/locations/{location_id}/prices':
+  '/v1/products/{product_id}/locations/{location_id}/details':
     get:
       tags:
-        - prices-controller
-      summary: getPricesByProductIdAndLocationId
-      operationId: getPricesByProductIdAndLocationIdUsingGET
+        - details-controller
+      summary: getDetailsByProductIdAndLocationId
+      operationId: getDetailsByProductIdAndLocationIdUsingGET
       produces:
         - application/json
       parameters:
@@ -42,7 +42,7 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/PricesResponse'
+            $ref: '#/definitions/DetailsResponse'
         '400':
           description: Bad Request
         '401':
@@ -55,30 +55,23 @@ paths:
           description: Internal server error
 
 definitions:
-  PricesResponse:
+  DetailsResponse:
     type: object
     required:
       - product_id
       - location_id
-      - prices
+      - name
+      - current_price
     properties:
       product_id:
         type: integer
       location_id:
         type: integer
-      prices:
-        $ref: '#/definitions/Prices'
-    title: Prices Response
-  Prices:
-    type: object
-    required:
-      - current_price
-    properties:
+      name:
+        type: string
       current_price:
         $ref: '#/definitions/Price'
-      retail_price:
-        $ref: '#/definitions/Price'
-    title: Prices
+    title: Details Response
   Price:
     type: object
     required:

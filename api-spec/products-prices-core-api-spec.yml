@@ -64,8 +64,10 @@ definitions:
     properties:
       product_id:
         type: integer
+        example: 737643
       location_id:
         type: integer
+        example: 3467
       prices:
         $ref: '#/definitions/Prices'
     title: Prices Response
@@ -78,6 +80,8 @@ definitions:
         $ref: '#/definitions/Price'
       retail_price:
         $ref: '#/definitions/Price'
+      initial_price:
+        $ref: '#/definitions/Price'
     title: Prices
   Price:
     type: object
@@ -87,6 +91,8 @@ definitions:
     properties:
       value:
         type: number
+        example: 13.99
       currency_code:
         type: string
+        example: USD
     title: Price

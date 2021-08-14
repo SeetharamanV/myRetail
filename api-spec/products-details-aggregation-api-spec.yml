@@ -65,10 +65,13 @@ definitions:
     properties:
       product_id:
         type: integer
+        example: 7438248
       location_id:
         type: integer
+        example: 2374
       name:
         type: string
+        example: Acme Glue
       current_price:
         $ref: '#/definitions/Price'
     title: Details Response
@@ -80,6 +83,8 @@ definitions:
     properties:
       value:
         type: number
+        example: 13.99
       currency_code:
         type: string
+        example: USD
     title: Price

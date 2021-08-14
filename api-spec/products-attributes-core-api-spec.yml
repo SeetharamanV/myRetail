@@ -1,0 +1,75 @@
+swagger: '2.0'
+info:
+  description: MyRetail Product Attributes Core API
+  title: MyRetail Attributes Code API
+  version: '1.0'
+host: 'localhost:9090'
+basePath: /my_retail
+tags:
+  - name: attributes-controller
+    description: Attributes Controller
+paths:
+  '/v1/products/{id}/attributes':
+    get:
+      tags:
+        - attributes-controller
+      summary: getAttributesById
+      operationId: getAttributesByIdUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: "key"
+          in: "query"
+          description: Valid api key.
+          required: true
+          type: "string"
+        - name: "authorization"
+          in: "header"
+          description: Valid authorization bearer token.
+          required: true
+          type: "string"
+        - name: id
+          in: path
+          description: product id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AttributesResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Not authenticated
+        '403':
+          description: Access token does not have the required scope
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+
+definitions:
+  AttributesResponse:
+    type: object
+    required:
+      - id
+      - attributes
+    properties:
+      id:
+        type: integer
+        format: int64
+      attributes:
+        $ref: '#/definitions/Attributes'
+    title: Attributes Response
+  Attributes:
+    type: object
+    required:
+      - name
+      - department
+    properties:
+      name:
+        type: string
+      department:
+        type: string
+    title: Attributes

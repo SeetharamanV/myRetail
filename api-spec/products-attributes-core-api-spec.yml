@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   description: MyRetail Product Attributes Core API
-  title: MyRetail Attributes Code API
+  title: MyRetail Attributes Core API
   version: '1.0'
 host: 'localhost:9090'
 basePath: /my_retail
@@ -9,12 +9,12 @@ tags:
   - name: attributes-controller
     description: Attributes Controller
 paths:
-  '/v1/products/{id}/attributes':
+  '/v1/products/{product_id}/attributes':
     get:
       tags:
         - attributes-controller
-      summary: getAttributesById
-      operationId: getAttributesByIdUsingGET
+      summary: getAttributesByProductId
+      operationId: getAttributesByProductIdUsingGET
       produces:
         - application/json
       parameters:
@@ -28,7 +28,7 @@ paths:
           description: Valid authorization bearer token.
           required: true
           type: "string"
-        - name: id
+        - name: product_id
           in: path
           description: product id
           required: true
@@ -53,10 +53,10 @@ definitions:
   AttributesResponse:
     type: object
     required:
-      - id
+      - product_id
       - attributes
     properties:
-      id:
+      product_id:
         type: integer
         format: int64
       attributes:

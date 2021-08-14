@@ -1,0 +1,87 @@
+swagger: '2.0'
+info:
+  description: MyRetail Prices Core API
+  title: MyRetail Prices Core API
+  version: '1.0'
+host: 'localhost:9090'
+basePath: /my_retail
+tags:
+  - name: prices-controller
+    description: Prices Controller
+paths:
+  '/v1/products/{product_id}/locations/{location_id}/prices':
+    get:
+      tags:
+        - prices-controller
+      summary: getPricesByProductIdAndLocationId
+      operationId: getPricesByProductIdAndLocationIdUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: "key"
+          in: "query"
+          description: Valid api key.
+          required: true
+          type: "string"
+        - name: "authorization"
+          in: "header"
+          description: Valid authorization bearer token.
+          required: true
+          type: "string"
+        - name: product_id
+          in: path
+          description: product id
+          required: true
+          type: integer
+        - name: location_id
+          in: path
+          description: location id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PricesResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+
+definitions:
+  PricesResponse:
+    type: object
+    required:
+      - product_id
+      - prices
+    properties:
+      product_id:
+        type: integer
+      prices:
+        $ref: '#/definitions/Prices'
+    title: Prices Response
+  Prices:
+    type: object
+    required:
+      - current_price
+    properties:
+      current_price:
+        $ref: '#/definitions/Price'
+    title: Prices
+  Price:
+    type: object
+    required:
+      - value
+      - currency_code
+    properties:
+      value:
+        type: number
+      currency_code:
+        type: string
+    title: Price

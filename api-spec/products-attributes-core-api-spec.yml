@@ -58,7 +58,7 @@ definitions:
     properties:
       product_id:
         type: integer
-        format: int64
+        example: 754587
       attributes:
         $ref: '#/definitions/Attributes'
     title: Attributes Response
@@ -70,6 +70,8 @@ definitions:
     properties:
       name:
         type: string
+        example: Acem Glue
       department:
         type: string
+        example: Home
     title: Attributes

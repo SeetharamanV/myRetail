@@ -1,0 +1,13 @@
+server:
+  port: 9091
+  address: 127.0.0.1
+  servlet:
+    context-path: /my_retail
+spring:
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSX
+    property-naming-strategy: SNAKE_CASE
+    deserialization:
+      fail-on-unknown-properties: false
+      fail-on-missing-creator-properties: true
+    time-zone: UTC

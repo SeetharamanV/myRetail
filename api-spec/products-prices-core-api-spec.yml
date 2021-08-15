@@ -1,98 +1,73 @@
 swagger: '2.0'
 info:
-  description: MyRetail Prices Core API
-  title: MyRetail Prices Core API
   version: '1.0'
-host: 'localhost:9090'
+  description: My Retail Products Price Core API
+  title: My Retail Products Price Core API
+host: localhost:9091
 basePath: /my_retail
 tags:
   - name: prices-controller
     description: Prices Controller
 paths:
-  '/v1/products/{product_id}/locations/{location_id}/prices':
+  /v1/products/{productId}/prices:
     get:
       tags:
         - prices-controller
-      summary: getPricesByProductIdAndLocationId
-      operationId: getPricesByProductIdAndLocationIdUsingGET
+      summary: getPricesByProductId
+      operationId: getPricesByProductIdUsingGET
       produces:
         - application/json
       parameters:
-        - name: "key"
-          in: "query"
-          description: Valid api key.
-          required: true
-          type: "string"
-        - name: "authorization"
-          in: "header"
-          description: Valid authorization bearer token.
-          required: true
-          type: "string"
-        - name: product_id
+        - name: productId
           in: path
-          description: product id
+          description: productId
           required: true
           type: integer
-        - name: location_id
-          in: path
-          description: location id
-          required: true
-          type: integer
+          format: int64
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/PricesResponse'
-        '400':
-          description: Bad Request
+            $ref: '#/definitions/PricesDocument'
         '401':
-          description: Unauthenticated
+          description: Unauthorized
         '403':
           description: Forbidden
         '404':
-          description: Not found
-        '500':
-          description: Internal server error
-
+          description: Not Found
+      deprecated: false
 definitions:
-  PricesResponse:
+  AllPrices:
     type: object
-    required:
-      - product_id
-      - location_id
-      - prices
-    properties:
-      product_id:
-        type: integer
-        example: 737643
-      location_id:
-        type: integer
-        example: 3467
-      prices:
-        $ref: '#/definitions/Prices'
-    title: Prices Response
-  Prices:
-    type: object
-    required:
-      - current_price
     properties:
       current_price:
         $ref: '#/definitions/Price'
-      retail_price:
-        $ref: '#/definitions/Price'
       initial_price:
         $ref: '#/definitions/Price'
-    title: Prices
+      regular_price:
+        $ref: '#/definitions/Price'
+    title: AllPrices
   Price:
     type: object
     required:
-      - value
       - currency_code
+      - value
     properties:
-      value:
-        type: number
-        example: 13.99
       currency_code:
         type: string
-        example: USD
+      value:
+        type: number
+        format: double
     title: Price
+  PricesDocument:
+    type: object
+    required:
+      - prices
+      - product_id
+    properties:
+      prices:
+        $ref: '#/definitions/AllPrices'
+      product_id:
+        type: integer
+        format: int64
+    title: PricesDocument

@@ -17,7 +17,7 @@ class PricesController {
     @GetMapping("/products/{productId}/prices")
     fun getPricesByProductId(
         @PathVariable productId: Long
-//        ,@RequestParam("includes", defaultValue = "[]") fieldGroups: List<PriceType>
+//        ,@RequestParam("includes", defaultValue = "[]") includes: List<PriceType>
     ): PricesDocument {
         return PricesDocument(productId, AllPrices(Price(BigDecimal.ONE.toDouble(), "USD"), null, null))
     }

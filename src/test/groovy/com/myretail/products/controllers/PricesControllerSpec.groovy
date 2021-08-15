@@ -16,8 +16,6 @@ class PricesControllerSpec extends AbstractSpecification {
         def result = pricesController.getPricesByProductId(123)
 
         then:
-
         expectedPriceDocument == result
-
     }
 }

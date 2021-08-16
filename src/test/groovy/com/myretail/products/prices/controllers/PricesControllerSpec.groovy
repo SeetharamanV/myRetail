@@ -1,7 +1,6 @@
-package com.myretail.products.controllers
+package com.myretail.products.prices.controllers
 
 import com.myretail.products.AbstractSpecification
-import com.myretail.products.prices.controllers.PricesController
 import com.myretail.products.prices.entities.AllPrices
 import com.myretail.products.prices.entities.Price
 import com.myretail.products.prices.entities.PricesDocument

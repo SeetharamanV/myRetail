@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController
 import java.math.BigDecimal
 
 @RestController
-@RequestMapping(path = ["/v1/prices"], produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping(path = ["/v1"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class PricesController {
 
-    @GetMapping("/products/{productId}")
+    @GetMapping("/products/{productId}/prices")
     fun getPricesByProductId(
         @PathVariable productId: Long
 //        ,@RequestParam("includes", defaultValue = "[]") includes: List<PriceType>
     ): PricesDocument {
-        return PricesDocument(productId, AllPrices(Price(BigDecimal.ONE.toDouble(), "USD")))
+        return PricesDocument(productId, AllPrices(Price(BigDecimal.ONE.toDouble(), "USD"), null, null))
     }
 }

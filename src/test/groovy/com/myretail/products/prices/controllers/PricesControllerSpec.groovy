@@ -7,7 +7,7 @@ import com.myretail.products.prices.entities.PricesDocument
 
 class PricesControllerSpec extends AbstractSpecification {
     def pricesController = new PricesController()
-    def "Items Controller test - get all items."() {
+    def "Prices Controller test - get by product id - happy path."() {
         given:
         def expectedPriceDocument = new PricesDocument(123, new AllPrices(new Price(BigDecimal.ONE.toDouble(), "USD"), null, null))
 

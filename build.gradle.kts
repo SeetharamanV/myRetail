@@ -31,8 +31,6 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.security:spring-security-core")
-    implementation("org.springframework.security:spring-security-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -107,7 +105,7 @@ tasks.withType<JacocoReportBase> {
                     "**/entities/**",
                     "**/exceptions/**",
                     "**/models/**",
-                    "**/preloads/**",
+                    "**/security/**",
                     "**/repositories/**",
                     "**/MyRetailApplication**"
                 )

@@ -1,8 +1,3 @@
-server:
-  port: 9091
-  address: 127.0.0.1
-  servlet:
-    context-path: /my_retail
 spring:
   jackson:
     date-format: yyyy-MM-dd'T'HH:mm:ss.SSSX
@@ -14,8 +9,5 @@ spring:
 myretail:
   security:
     valid-api-keys:
-      - TOKENONE
-      - TOKENTWO
-      - TOKENTHREE
-    valid-authorization-token: Bearer `sometoken`
-
+      - testkey1
+    valid-authorization-token: Bearer `testtoken`

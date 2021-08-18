@@ -10,7 +10,7 @@ class PricesControllerIntegrationSpec extends AbstractRestIntegrationSpecificati
         String expectedResponse = """{"product_id":1233,"prices":{"current_price":{"value":1.0,"currency_code":"USD"}}}""" as String
 
         when:
-        MvcResult result = mockGet("/v1/prices/products/1233").andReturn()
+        MvcResult result = mockGet("/v1/prices/products/1233?key=testkey1","Bearer `testtoken`").andReturn()
 
         then:
         result.response.status == 200
@@ -19,7 +19,7 @@ class PricesControllerIntegrationSpec extends AbstractRestIntegrationSpecificati
 
     def "Test Price Core Controller - Bad Request "() {
         when:
-        MvcResult result = mockGet("/v1/prices/products/ABC").andReturn()
+        MvcResult result = mockGet("/v1/prices/products/ABC?key=testkey1","Bearer `testtoken`").andReturn()
 
         then:
         result.response.status == 400

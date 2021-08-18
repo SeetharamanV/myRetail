@@ -105,7 +105,7 @@ tasks.withType<JacocoReportBase> {
                     "**/entities/**",
                     "**/exceptions/**",
                     "**/models/**",
-                    "**/preloads/**",
+                    "**/security/**",
                     "**/repositories/**",
                     "**/MyRetailApplication**"
                 )

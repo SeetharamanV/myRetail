@@ -10,7 +10,7 @@ class AttributesControllerIntegrationSpec extends AbstractRestIntegrationSpecifi
         String expectedResponse = """{"product_id":1233,"attributes":{"name":"Acme Glue","department":"Home","unit_of_measure":"pounds"}}""" as String
 
         when: "Get attributes for an product"
-        MvcResult result = mockGet("/v1/attributes/products/1233").andReturn()
+        MvcResult result = mockGet("/v1/attributes/products/1233?key=testkey1","Bearer `testtoken`").andReturn()
 
         then:
         result.response.status == 200
@@ -22,7 +22,7 @@ class AttributesControllerIntegrationSpec extends AbstractRestIntegrationSpecifi
         String expectedErrorResponse = """{"message":"Invalid attribute type passed for 'exclude'.","code":"PA-4000"}""" as String
 
         when:
-        MvcResult result = mockGet("/v1/attributes/products/1233?excludes=test").andReturn()
+        MvcResult result = mockGet("/v1/attributes/products/1233?excludes=test&key=testkey1","Bearer `testtoken`").andReturn()
 
         then:
         result.response.status == 400
@@ -34,7 +34,7 @@ class AttributesControllerIntegrationSpec extends AbstractRestIntegrationSpecifi
         String expectedResponse = """{"product_id":1233,"attributes":{"unit_of_measure":"pounds"}}""" as String
 
         when:
-        MvcResult result = mockGet("/v1/attributes/products/1233?excludes=name, department").andReturn()
+        MvcResult result = mockGet("/v1/attributes/products/1233?excludes=name, department&key=testkey1","Bearer `testtoken`").andReturn()
 
         then:
         result.response.status == 200

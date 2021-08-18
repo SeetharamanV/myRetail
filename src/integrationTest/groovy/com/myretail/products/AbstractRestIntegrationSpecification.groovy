@@ -17,8 +17,10 @@ abstract class AbstractRestIntegrationSpecification extends AbstractIntegrationS
     protected String AUTH_HEADER_NAME = "X-Header"
     protected String AUTH_HEADER_VALUE = "Token"
 
-    def mockGet(String url) {
+    def mockGet(String url, String authorization) {
         return mockMvc.perform(get(url)
+                .header("authorization", authorization)
+                .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
     }
 

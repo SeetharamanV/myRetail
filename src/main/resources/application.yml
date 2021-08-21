@@ -16,12 +16,12 @@ myretail:
     api-key: TOKENONE
     authorization-token: Bearer `sometoken`
     prices:
-      url: http://localhost:9091/my_retail
-      path: /v1/prices/products/{productId}
+      url: http://localhost:9091/my_retail/
+      path: v1/prices/products/{productId}
       timeout: 10
     attributes:
-      url: http://localhost:9091/my_retail
-      path: /v1/attributes/products/{productId}
+      url: http://localhost:9091/my_retail/
+      path: v1/attributes/products/{productId}
       timeout: 10
   security:
     valid-api-keys:

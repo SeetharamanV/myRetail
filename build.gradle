@@ -46,26 +46,40 @@ distTar.archiveVersion.set("")
 jar.enabled = true
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("io.micrometer:micrometer-core")
-    implementation("io.micrometer:micrometer-registry-prometheus")
-//    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    compile("org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}")
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.1")
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+    //Swagger
+    compile("io.springfox:springfox-swagger-ui:${swagger_version}")
+    compile("io.springfox:springfox-swagger2:${swagger_version}")
+
+    compile "org.springframework.boot:spring-boot-starter-actuator:${spring_boot_version}"
+    compile "org.springframework:spring-aspects:5.1.19.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-web:${spring_boot_version}"
     compile "org.springframework.boot:spring-boot-starter-validation"
+    compile("org.springframework.retry:spring-retry:1.2.4.RELEASE")
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("io.springfox:springfox-swagger-ui:${swagger_version}")
-    implementation("io.springfox:springfox-swagger2:${swagger_version}")
-    implementation("org.slf4j:slf4j-api:1.7.32")
-    implementation("org.slf4j:slf4j-log4j12:1.7.32")
+
+    compile("io.micrometer:micrometer-core")
+    compile("io.micrometer:micrometer-registry-prometheus")
+
+    // Retrofit
+    compile("com.squareup.retrofit2:retrofit:${retrofit_version}")
+    compile("com.squareup.retrofit2:converter-jackson:${retrofit_version}")
+
+    compile("org.slf4j:slf4j-api:1.7.32")
+    compile("org.slf4j:slf4j-log4j12:1.7.32")
+
+
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude group: "org.junit.vintage", module: "junit-vintage-engine"
     }
     testCompile "org.codehaus.groovy:groovy-all:${groovy_version}"
     testCompile "org.spockframework:spock-core:${spock_version}"
     testCompile "org.spockframework:spock-spring:${spock_version}"
+    testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
     testImplementation("org.jeasy:easy-random-core:4.2.0")
 }
 

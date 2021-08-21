@@ -1,8 +1,8 @@
-package com.myretail.products.prices.entities
+package com.myretail.products.details.entities
 
 import com.fasterxml.jackson.annotation.JsonInclude
 
-data class PricesDocument(
+data class PricesResponse(
     val productId: Long,
     val prices: AllPrices
 )

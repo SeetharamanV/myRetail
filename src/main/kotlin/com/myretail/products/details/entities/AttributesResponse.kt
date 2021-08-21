@@ -1,8 +1,8 @@
-package com.myretail.products.attributes.entities
+package com.myretail.products.details.entities
 
 import com.fasterxml.jackson.annotation.JsonInclude
 
-data class AttributesDocument(
+data class AttributesResponse (
     val productId: Long,
     val attributes: Attributes
 )

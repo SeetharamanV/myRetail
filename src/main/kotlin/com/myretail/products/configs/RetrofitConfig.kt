@@ -65,7 +65,7 @@ class RetrofitConfig(
             .addQueryParameter(API_KEY_PATH, partnerApisProperties.apiKey)
             .build()
 
-        // Adding authorization token
+        // Adding authorization token to header
         val alteredRequest = chain
             .request()
             .newBuilder()

@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.myretail"
-version = "0.0.1-SNAPSHOT"
+//version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
@@ -22,7 +22,7 @@ repositories {
 }
 
 application {
-    mainClass.set("com.myretail.products.MyRetailApplicationkt")
+    mainClassName = "com.myretail.products.MyRetailApplicationkt"
 }
 
 dependencies {
@@ -33,7 +33,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation(kotlin("stdlib"))
     implementation("io.springfox:springfox-swagger-ui:2.9.2")
     implementation("io.springfox:springfox-swagger2:2.9.2")
     implementation("org.codehaus.groovy:groovy:3.0.5")
@@ -67,6 +67,30 @@ sourceSets {
             runtimeClasspath += output + compileClasspath + sourceSets["test"].runtimeClasspath
         }
     }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs(
+                    "src/main/kotlin/"
+            )
+        }
+    }
+}
+
+tasks.jar {
+    manifest {
+        attributes("Main-Class" to "com.myretail.products.MyRetailApplicationkt")
+    }
+
+    // To add all of the dependencies
+    from(sourceSets.main.get().output)
+
+    dependsOn(configurations.runtimeClasspath)
+    from ({
+        configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
+    })
 }
 
 tasks.withType<Test> {
@@ -162,4 +186,10 @@ tasks.check {
 
 tasks.withType<AbstractArchiveTask> {
     setProperty("archiveFileName", "myretail.jar")
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "com.myretail.products.MyRetailApplicationKt"
+    }
 }

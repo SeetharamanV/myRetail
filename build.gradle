@@ -1,0 +1,193 @@
+buildscript {
+    repositories {
+        maven {
+            url = "https://plugins.gradle.org/m2/"
+        }
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.avast.gradle:gradle-docker-compose-plugin:0.14.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlin_version}")
+        classpath "org.jetbrains.kotlin:kotlin-noarg:${kotlin_version}"
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version "$spring_boot_version"
+    id "io.spring.dependency-management" version "$spring_dependency_plugin_version"
+    id 'org.jetbrains.kotlin.jvm' version "$kotlin_version"
+    id "org.jetbrains.kotlin.plugin.spring" version "$kotlin_version"
+    id "org.jetbrains.kotlin.plugin.jpa" version "$kotlin_version"
+    id 'groovy'
+    id 'jacoco'
+    id 'java'
+    id 'eclipse'
+    id 'application'
+    id 'org.jetbrains.kotlin.plugin.allopen' version "$kotlin_version"
+    id 'org.jetbrains.kotlin.plugin.noarg' version "$kotlin_version"
+    id 'org.jlleitschuh.gradle.ktlint' version "$ktlint_version"
+    id 'com.gorylenko.gradle-git-properties' version "$git_properties_version"
+}
+
+apply plugin: 'groovy'
+apply plugin: 'jacoco'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.avast.gradle.docker-compose'
+//apply plugin: 'com.target.platform.connector.spring-boot-webmvc'
+
+group = "com.myretail"
+version = "0.0.1-SNAPSHOT"
+application.mainClassName = "com.myretail.products.MyRetailApplicationkt"
+
+distTar.archiveVersion.set("")
+jar.enabled = true
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("io.micrometer:micrometer-core")
+    implementation("io.micrometer:micrometer-registry-prometheus")
+//    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile "org.springframework.boot:spring-boot-starter-validation"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("io.springfox:springfox-swagger-ui:${swagger_version}")
+    implementation("io.springfox:springfox-swagger2:${swagger_version}")
+    implementation("org.slf4j:slf4j-api:1.7.32")
+    implementation("org.slf4j:slf4j-log4j12:1.7.32")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude group: "org.junit.vintage", module: "junit-vintage-engine"
+    }
+    testCompile "org.codehaus.groovy:groovy-all:${groovy_version}"
+    testCompile "org.spockframework:spock-core:${spock_version}"
+    testCompile "org.spockframework:spock-spring:${spock_version}"
+    testImplementation("org.jeasy:easy-random-core:4.2.0")
+}
+
+configurations.all {
+    exclude group: 'ch.qos.logback'
+    exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+    }
+}
+
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+sourceSets {
+    main.kotlin.srcDirs += 'src/main/kotlin'
+    main.resources.srcDir('src/main/resources')
+    test.kotlin.srcDirs += 'src/test/kotlin'
+    test.resources.srcDir('src/main/resources')
+
+    integrationTest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+task integrationTest(type: Test) {
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    shouldRunAfter test
+    maxHeapSize = '1G'
+    testLogging {
+        events "passed", "failed"
+    }
+}
+
+tasks.withType(Test) {
+    outputs.upToDateWhen { false }
+    finalizedBy(jacocoTestReport)
+    testLogging {
+        exceptionFormat = 'full'
+        showStandardStreams = true
+        events "passed", "failed"
+    }
+}
+
+jacoco {
+    toolVersion = "$jacoco_version"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+tasks.withType(JacocoReportBase) {
+    executionData(test, integrationTest)
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "**/configs/**",
+                    "**/entities/**",
+                    "**/exceptions/**",
+                    "**/models/**",
+                    "**/security/**",
+                    "**/repositories/**",
+                    "**/MyRetailApplication**"
+            ])
+        }))
+    }
+}
+
+jacocoTestReport {
+    getExecutionData().setFrom(fileTree(buildDir).include("/jacoco/*.exec"))
+    reports {
+        xml.enabled true
+        html.enabled true
+        csv.enabled false
+        html.destination file("$buildDir/jacocoHtmlReport")
+    }
+    doLast {
+        println("See Jacoco Test Coverage Report at: file://$buildDir/jacocoHtmlReport/index.html")
+    }
+}
+
+jacocoTestCoverageVerification {
+    getExecutionData().setFrom(fileTree(buildDir).include("/jacoco/*.exec"))
+    violationRules {
+        rule {
+            enabled = true
+            element = 'BUNDLE'
+            limit {
+                counter = 'BRANCH'
+                minimum = 0.75
+            }
+        }
+    }
+}
+
+ktlint {
+    disabledRules = ["import-ordering"]
+}
+
+//check.dependsOn(['integration', 'jacocoTestCoverageVerification', 'jacocoTestReport'])
+check.dependsOn(['integrationTest', 'jacocoTestCoverageVerification', 'jacocoTestReport'])
+
+test.finalizedBy(jacocoTestReport)
+
+tasks.withType(Jar) {
+    manifest {
+        attributes["Main-Class"] = "com.myretail.products.MyRetailApplicationKt"
+    }
+}

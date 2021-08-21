@@ -12,6 +12,17 @@ spring:
       fail-on-missing-creator-properties: true
     time-zone: UTC
 myretail:
+  details:
+    apiKey: TOKENONE
+    partners:
+      prices:
+        baseUrl: http://localhost:9091/my_retail
+        getPath: /v1/attributes/products/{productId}
+        timeout: 10
+      attributes:
+        baseUrl: http://localhost:9091/my_retail
+        getPath: /v1/prices/products/{productId}
+        timeout: 10
   security:
     valid-api-keys:
       - TOKENONE

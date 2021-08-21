@@ -13,15 +13,15 @@ spring:
     time-zone: UTC
 myretail:
   partner-apis:
-    apiKey: TOKENONE
+    api-key: TOKENONE
     authorization-token: Bearer `sometoken`
     prices:
-      base-url: http://localhost:9091/my_retail
-      path: /v1/attributes/products/{productId}
+      url: http://localhost:9091/my_retail
+      path: /v1/prices/products/{productId}
       timeout: 10
     attributes:
-      baseUrl: http://localhost:9091/my_retail
-      getPath: /v1/prices/products/{productId}
+      url: http://localhost:9091/my_retail
+      path: /v1/attributes/products/{productId}
       timeout: 10
   security:
     valid-api-keys:

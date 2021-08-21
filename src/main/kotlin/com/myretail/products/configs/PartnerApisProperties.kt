@@ -13,7 +13,7 @@ data class PartnerApisProperties(
 )
 
 data class UrlProperties(
-    val baseUrl: String,
+    val url: String,
     val path: String,
     val timeout: Long = 10L
 )

@@ -7,6 +7,17 @@ spring:
       fail-on-missing-creator-properties: true
     time-zone: UTC
 myretail:
+  partner-apis:
+    api-key: TOKENONE
+    authorization-token: Bearer `sometoken`
+    prices:
+      url: http://localhost:9091/my_retail
+      path: /v1/prices/products/{productId}
+      timeout: 10
+    attributes:
+      url: http://localhost:9091/my_retail
+      path: /v1/attributes/products/{productId}
+      timeout: 10
   security:
     valid-api-keys:
       - testkey1

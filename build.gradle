@@ -37,7 +37,6 @@ apply plugin: 'kotlin'
 apply plugin: 'kotlin-spring'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.avast.gradle.docker-compose'
-//apply plugin: 'com.target.platform.connector.spring-boot-webmvc'
 
 group = "com.myretail"
 version = "0.0.1-SNAPSHOT"
@@ -181,7 +180,6 @@ ktlint {
     disabledRules = ["import-ordering"]
 }
 
-//check.dependsOn(['integration', 'jacocoTestCoverageVerification', 'jacocoTestReport'])
 check.dependsOn(['integrationTest', 'jacocoTestCoverageVerification', 'jacocoTestReport'])
 
 test.finalizedBy(jacocoTestReport)

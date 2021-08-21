@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse
 @Component
 class ApiKeyRequestFilter(private val securityProperties: SecurityProperties) : GenericFilterBean() {
     companion object {
-        private const val PATH_API_KEY = "key"
-        private const val HEADER_API_KEY = "x-api-key"
+        private const val API_KEY_PATH = "key"
+        private const val API_KEY_HEADER = "x-api-key"
     }
 
     private val log = LoggerFactory.getLogger(this::class.java)
@@ -31,8 +31,8 @@ class ApiKeyRequestFilter(private val securityProperties: SecurityProperties) : 
 
     private fun apiKeyValidator(chain: FilterChain, request: ServletRequest, response: ServletResponse, req: HttpServletRequest) {
         val parameters = req.parameterMap
-        val apiKeyFromPath = parameters[PATH_API_KEY]
-        val apiKeyFromHeader = req.getHeader(HEADER_API_KEY)
+        val apiKeyFromPath = parameters[API_KEY_PATH]
+        val apiKeyFromHeader = req.getHeader(API_KEY_HEADER)
         val key = if (apiKeyFromPath.isNullOrEmpty()) apiKeyFromHeader else apiKeyFromPath[0]
         when {
             null == key -> {

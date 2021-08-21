@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component
 
 @EnableRetry
 @Component
-class AttributesServices() {
-    fun getAttributesForProductId(productId: Long) {
+class PricesService() {
+    fun getPricesForProductId(productId: Long) {
     }
 }

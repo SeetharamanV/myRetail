@@ -10,6 +10,23 @@ class PricesControllerIntegrationSpec extends AbstractRestIntegrationSpecificati
     def "Create Prices for a product id."() {
         given:
         String newPrices = """{
+            "prices":{
+                "current_price":{
+                    "value":1.99,
+                    "currency_code":"USD"
+                },
+                "regular_price":{
+                    "value":1.99,
+                    "currency_code":"USD"
+                },
+                "initial_price":{
+                    "value":1.99,
+                    "currency_code":"USD"
+                }
+            }
+        }""" as String
+
+        String expectedResponse = """{
             "product_id":$PRODUCT_ID,
             "prices":{
                 "current_price":{
@@ -32,7 +49,7 @@ class PricesControllerIntegrationSpec extends AbstractRestIntegrationSpecificati
 
         then:
         result.response.status == 200
-        assertJsonEquals(newPrices.toString(), result.response.contentAsString)
+        assertJsonEquals(expectedResponse.toString(), result.response.contentAsString)
 
         0 * _
     }

@@ -8,6 +8,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ProductAttributesClient {
-    @GET
-    fun getAttributesByProductId(@Path("productId") productId: Long, @Query("excludes") excludes: String): Call<AttributesResponse>
+    @GET("{productId}")
+    fun getAttributesByProductId(@Path("productId") productId: Long, @Query("excludes") excludes: String = ""): Call<AttributesResponse>
 }

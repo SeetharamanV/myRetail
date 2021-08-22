@@ -2,9 +2,11 @@ package com.myretail.products.details.controllers
 
 import com.myretail.products.AbstractRestIntegrationSpecification
 import org.springframework.test.web.servlet.MvcResult
+import spock.lang.Ignore
 
 class DetailsControllerIntegrationSpec extends AbstractRestIntegrationSpecification {
 
+    @Ignore
     def "Test Details Aggregation Controller - Get Happy "() {
         given:
         String expectedResponse = """{"product_id":1233,"name":"Acme Glue","current_price":{"value":1.0,"currency_code":"USD"}}""" as String
@@ -17,6 +19,7 @@ class DetailsControllerIntegrationSpec extends AbstractRestIntegrationSpecificat
         result.response.contentAsString == expectedResponse
     }
 
+    @Ignore
     def "Test Details Aggregation Controller - Bad Request "() {
         when:
         MvcResult result = mockGet("/v1/details/products/ABC?key=testkey1","Bearer `testtoken`").andReturn()

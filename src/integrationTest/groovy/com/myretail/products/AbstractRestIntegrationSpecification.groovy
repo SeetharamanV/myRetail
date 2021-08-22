@@ -28,11 +28,11 @@ abstract class AbstractRestIntegrationSpecification extends AbstractIntegrationS
                 .accept(MediaType.APPLICATION_JSON))
     }
 
-    def mockPost(String url, String postBody) {
+    def mockPost(String url, String authorization, String postBody) {
         return mockMvc.perform(post(url)
                 .content(postBody)
                 .contentType(MediaType.APPLICATION_JSON)
-                .header(AUTH_HEADER_NAME, AUTH_HEADER_VALUE)
+                .header(AUTH_HEADER_NAME, authorization)
                 .accept(MediaType.APPLICATION_JSON))
     }
 

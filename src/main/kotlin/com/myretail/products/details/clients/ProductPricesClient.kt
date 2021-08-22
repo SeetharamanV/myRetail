@@ -6,6 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ProductPricesClient {
-    @GET
+    @GET("{productId}")
     fun getPricesByProductId(@Path("productId") productId: Long): Call<PricesResponse>
 }

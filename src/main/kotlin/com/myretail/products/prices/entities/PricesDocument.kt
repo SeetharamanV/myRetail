@@ -14,6 +14,13 @@ data class PricesDocument(
     fun toPricesResponse(): PricesResponse = PricesResponse(this.productId, this.prices)
 }
 
+data class PricesRequest(
+    val productId: Long,
+    val prices: AllPrices
+) {
+    fun toPriceDocument(): PricesDocument = PricesDocument(productId = this.productId, prices = this.prices)
+}
+
 data class PricesResponse(
     val productId: Long,
     val prices: AllPrices

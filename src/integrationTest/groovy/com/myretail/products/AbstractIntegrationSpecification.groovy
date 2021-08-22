@@ -74,4 +74,11 @@ abstract class AbstractIntegrationSpecification extends Specification {
     def getAttributesUrl(Long productId, String excludes="") {
         return ATTRIBUTES_URI+ "/$productId?excludes=$excludes&key=${partnerApisProperties.apiKey}"
     }
+
+    Integer getWireMockCallCount(String stubbedUrl, String mockedMethod) {
+        return wireMock.count {
+            method mockedMethod
+            url stubbedUrl
+        }
+    }
 }

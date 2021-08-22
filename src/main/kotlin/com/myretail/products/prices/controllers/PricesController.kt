@@ -1,24 +1,22 @@
 package com.myretail.products.prices.controllers
 
-import com.myretail.products.prices.entities.AllPrices
-import com.myretail.products.prices.entities.Price
-import com.myretail.products.prices.entities.PricesDocument
+import com.myretail.products.prices.entities.PricesResponse
+import com.myretail.products.prices.repositories.PricesRepository
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.math.BigDecimal
 
 @RestController
 @RequestMapping(path = ["/v1/prices"], produces = [MediaType.APPLICATION_JSON_VALUE])
-class PricesController {
+class PricesController(private val pricesRepository: PricesRepository) {
 
     @GetMapping("/products/{productId}")
     fun getPricesByProductId(
         @PathVariable productId: Long
 //        ,@RequestParam("includes", defaultValue = "[]") includes: List<PriceType>
-    ): PricesDocument {
-        return PricesDocument(productId, AllPrices(Price(BigDecimal.ONE.toDouble(), "USD")))
+    ): PricesResponse? {
+        return pricesRepository.findByProductId(productId)?.toPricesResponse()
     }
 }

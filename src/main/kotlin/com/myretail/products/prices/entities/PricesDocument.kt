@@ -6,7 +6,6 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
 @Document(collection = "prices")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 data class PricesDocument(
     @Id val _id: ObjectId? = null,
     val productId: Long,

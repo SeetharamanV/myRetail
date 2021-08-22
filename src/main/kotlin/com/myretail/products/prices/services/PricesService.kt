@@ -1,5 +1,6 @@
 package com.myretail.products.prices.services
 
+import com.myretail.products.prices.entities.PricesDocument
 import com.myretail.products.prices.entities.PricesRequest
 import com.myretail.products.prices.entities.PricesResponse
 import com.myretail.products.prices.repositories.PricesRepository
@@ -15,6 +16,6 @@ class PricesService(private val pricesRepository: PricesRepository) {
         productId: Long,
         pricesRequest: PricesRequest
     ): PricesResponse? {
-        return pricesRepository.save(pricesRequest.toPriceDocument()).toPricesResponse()
+        return pricesRepository.save(PricesDocument(productId = productId, prices = pricesRequest.prices)).toPricesResponse()
     }
 }

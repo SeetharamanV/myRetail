@@ -16,5 +16,7 @@ class PricesControllerSpec extends AbstractSpecification {
 
         then:
         expectedPriceDocument == result
+
+        0 * _
     }
 }

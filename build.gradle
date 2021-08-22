@@ -80,7 +80,11 @@ dependencies {
     testCompile "org.spockframework:spock-core:${spock_version}"
     testCompile "org.spockframework:spock-spring:${spock_version}"
     testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+    testCompile 'com.github.tomakehurst:wiremock-jre8-standalone:2.23.2'
+    testCompile "com.github.tomakehurst:wiremock-jre8:2.27.2"
+    testCompile 'com.github.tomjankes:wiremock-groovy:0.2.0'
     testImplementation("org.jeasy:easy-random-core:4.2.0")
+    testImplementation("net.javacrumbs.json-unit:json-unit:2.24.0")
 }
 
 configurations.all {

@@ -9,12 +9,12 @@ spring:
 myretail:
   partner-apis:
     api-key: TOKENONE
-    authorization-token: Bearer `sometoken`
+    authorization-token: Bearer `testtoken`
     prices:
-      url: http://localhost:9091/my_retail/v1/prices/products/
+      url: http://localhost:8090/my_retail/v1/prices/products/
       timeout: 10
     attributes:
-      url: http://localhost:9091/my_retail/v1/attributes/products/
+      url: http://localhost:8090/my_retail/v1/attributes/products/
       timeout: 10
   security:
     valid-api-keys:

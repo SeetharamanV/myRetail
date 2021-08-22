@@ -36,13 +36,13 @@ class ApiKeyRequestFilter(private val securityProperties: SecurityProperties) : 
         val key = if (apiKeyFromPath.isNullOrEmpty()) apiKeyFromHeader else apiKeyFromPath[0]
         when {
             null == key -> {
-                errorHandling(response, "Missing API KEY", HttpServletResponse.SC_UNAUTHORIZED)
+                errorHandling(response, "Missing API KEY.", HttpServletResponse.SC_UNAUTHORIZED)
             }
             securityProperties.validApiKeys.contains(key) -> {
                 chain.doFilter(request, response)
             }
             else -> {
-                errorHandling(response, "Invalid API KEY", HttpServletResponse.SC_UNAUTHORIZED)
+                errorHandling(response, "Invalid API KEY.", HttpServletResponse.SC_UNAUTHORIZED)
             }
         }
     }

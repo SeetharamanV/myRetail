@@ -11,6 +11,9 @@ spring:
       fail-on-unknown-properties: false
       fail-on-missing-creator-properties: true
     time-zone: UTC
+  data:
+    mongodb:
+      uri: mongodb://username:password@localhost:27017/prices?authSource=admin
 myretail:
   partner-apis:
     api-key: TOKENONE

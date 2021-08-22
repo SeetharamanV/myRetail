@@ -9,18 +9,27 @@ class PricesControllerIntegrationSpec extends AbstractRestIntegrationSpecificati
 
     def "Test Price Core Controller - Get Happy "() {
         given:
+        saveTestPrices()
         String expectedResponse = """{
-            "product_id":1233,
+            "product_id":$PRODUCT_ID,
             "prices":{
                 "current_price":{
-                    "value":1.0,
+                    "value":1.99,
+                    "currency_code":"USD"
+                },
+                "regular_price":{
+                    "value":1.99,
+                    "currency_code":"USD"
+                },
+                "initial_price":{
+                    "value":1.99,
                     "currency_code":"USD"
                 }
             }
         }""" as String
 
         when:
-        MvcResult result = mockGet("/v1/prices/products/1233?key=testkey1","Bearer `testtoken`").andReturn()
+        MvcResult result = mockGet("/v1/prices/products/$PRODUCT_ID?key=testkey1","Bearer `testtoken`").andReturn()
 
         then:
         result.response.status == 200

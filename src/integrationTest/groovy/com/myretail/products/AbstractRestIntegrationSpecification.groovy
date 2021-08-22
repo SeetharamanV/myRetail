@@ -1,5 +1,8 @@
 package com.myretail.products
 
+import com.myretail.products.prices.entities.AllPrices
+import com.myretail.products.prices.entities.Price
+import com.myretail.products.prices.entities.PricesDocument
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.http.MediaType
@@ -13,6 +16,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 abstract class AbstractRestIntegrationSpecification extends AbstractIntegrationSpecification {
     @Autowired
     MockMvc mockMvc
+
+    protected static PRODUCT_ID = 123456L
+    protected static DEFAULT_PRICE = 1.99
+    protected static DEFAULT_CURRENCY_CODE = "USD"
 
     def mockGet(String url, String authorization) {
         return mockMvc.perform(get(url)
@@ -41,5 +48,27 @@ abstract class AbstractRestIntegrationSpecification extends AbstractIntegrationS
         return mockMvc.perform(delete(url)
                 .header(AUTH_HEADER_NAME, AUTH_HEADER_VALUE)
                 .accept(MediaType.APPLICATION_JSON))
+    }
+
+    def saveTestPrices() {
+        PricesDocument pricesDocument = new PricesDocument(
+                null,
+                PRODUCT_ID,
+                new AllPrices(
+                        new Price(
+                            DEFAULT_PRICE as Double,
+                            DEFAULT_CURRENCY_CODE as String,
+                        ),
+                        new Price(
+                            DEFAULT_PRICE as Double,
+                            DEFAULT_CURRENCY_CODE as String,
+                        ),
+                        new Price(
+                            DEFAULT_PRICE as Double,
+                            DEFAULT_CURRENCY_CODE as String,
+                        )
+                )
+        )
+        savePricesDocument(pricesDocument)
     }
 }

@@ -1,4 +1,7 @@
 buildscript {
+    ext {
+        is_ci_active = false
+    }
     repositories {
         maven {
             url = "https://plugins.gradle.org/m2/"
@@ -135,6 +138,14 @@ task integrationTest(type: Test) {
     testLogging {
         events "passed", "failed"
     }
+}
+
+if(!is_ci_active) {
+    dockerCompose {
+        useComposeFiles = ['gradle/docker-compose.yml']
+    }
+    integrationTest.dependsOn 'composeUp'
+    integrationTest.finalizedBy 'composeDown'
 }
 
 tasks.withType(Test) {

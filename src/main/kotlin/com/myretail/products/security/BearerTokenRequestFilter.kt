@@ -27,13 +27,13 @@ class BearerTokenRequestFilter(private val securityProperties: SecurityPropertie
         val authorization = req.getHeader(AUTH_HEADER)
         when {
             null == authorization -> {
-                errorHandling(response, "Missing authorization token.", HttpServletResponse.SC_FORBIDDEN)
+                errorHandling(response, "Missing AUTHORIZATION TOKEN.", HttpServletResponse.SC_FORBIDDEN)
             }
             securityProperties.validAuthorizationToken == authorization -> {
                 chain.doFilter(request, response)
             }
             else -> {
-                errorHandling(response, "Invalid authorization token.", HttpServletResponse.SC_FORBIDDEN)
+                errorHandling(response, "Invalid AUTHORIZATION TOKEN.", HttpServletResponse.SC_FORBIDDEN)
             }
         }
     }

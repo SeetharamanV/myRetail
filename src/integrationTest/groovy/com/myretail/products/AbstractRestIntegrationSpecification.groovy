@@ -14,9 +14,6 @@ abstract class AbstractRestIntegrationSpecification extends AbstractIntegrationS
     @Autowired
     MockMvc mockMvc
 
-    protected String AUTH_HEADER_NAME = "X-Header"
-    protected String AUTH_HEADER_VALUE = "Token"
-
     def mockGet(String url, String authorization) {
         return mockMvc.perform(get(url)
                 .header("authorization", authorization)

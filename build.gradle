@@ -43,13 +43,12 @@ apply plugin: 'com.avast.gradle.docker-compose'
 
 group = "com.myretail"
 version = "0.0.1-SNAPSHOT"
-application.mainClassName = "com.myretail.products.MyRetailApplicationkt"
+application.mainClass = "com.myretail.products.MyRetailApplicationKt"
 
 distTar.archiveVersion.set("")
 jar.enabled = true
 
 dependencies {
-
     compile("org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}")
     compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.1")
     compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -59,11 +58,10 @@ dependencies {
     compile("io.springfox:springfox-swagger2:${swagger_version}")
 
     compile "org.springframework.boot:spring-boot-starter-actuator:${spring_boot_version}"
-    compile "org.springframework:spring-aspects:5.1.19.RELEASE"
     compile "org.springframework.boot:spring-boot-starter-web:${spring_boot_version}"
     compile "org.springframework.boot:spring-boot-starter-validation"
-    compile("org.springframework.retry:spring-retry:1.2.4.RELEASE")
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    compile "org.springframework:spring-aspects:5.1.19.RELEASE"
 
     compile("io.micrometer:micrometer-core")
     compile("io.micrometer:micrometer-registry-prometheus")
@@ -105,6 +103,9 @@ configurations.all {
 repositories {
     mavenCentral()
     jcenter()
+    maven {
+        url = "https://plugins.gradle.org/m2/"
+    }
 }
 
 compileKotlin {
@@ -125,10 +126,7 @@ configurations {
 
 sourceSets {
     main.kotlin.srcDirs += 'src/main/kotlin'
-    main.resources.srcDir('src/main/resources')
     test.kotlin.srcDirs += 'src/test/kotlin'
-    test.resources.srcDir('src/main/resources')
-
     integrationTest {
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
@@ -165,7 +163,6 @@ tasks.withType(Test) {
 
 jacoco {
     toolVersion = "$jacoco_version"
-    reportsDir = file("$buildDir/customJacocoReportDir")
 }
 
 tasks.withType(JacocoReportBase) {
@@ -219,9 +216,3 @@ ktlint {
 check.dependsOn(['integrationTest', 'jacocoTestCoverageVerification', 'jacocoTestReport'])
 
 test.finalizedBy(jacocoTestReport)
-
-tasks.withType(Jar) {
-    manifest {
-        attributes["Main-Class"] = "com.myretail.products.MyRetailApplicationKt"
-    }
-}

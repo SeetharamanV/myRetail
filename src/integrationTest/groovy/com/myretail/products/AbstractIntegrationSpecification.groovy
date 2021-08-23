@@ -38,8 +38,8 @@ abstract class AbstractIntegrationSpecification extends Specification {
     static final Query EMPTY_QUERY = new Query()
 
     protected String AUTH_HEADER_NAME = "authorization"
-    protected String PRICES_URI = "/my_retail/v1/prices/products"
-    protected String ATTRIBUTES_URI = "/my_retail/v1/attributes/products"
+    protected String PRICES_URI = "/my_retail/prices/v1/products"
+    protected String ATTRIBUTES_URI = "/my_retail/attributes/v1/products"
 
     def setupSpec() {
         println("Starting wireMockServer.")

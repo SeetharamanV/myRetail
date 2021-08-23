@@ -46,7 +46,7 @@ class DetailsControllerIntegrationSpec extends AbstractRestIntegrationSpecificat
 
         when:
         MvcResult result = mockGet(
-                "/v1/details/products/$PRODUCT_ID?excludes=$EXCLUDES&key=testkey1",
+                "/details/v1/products/$PRODUCT_ID?excludes=$EXCLUDES&key=testkey1",
                 "Bearer `testtoken`"
             ).andReturn()
 
@@ -63,7 +63,7 @@ class DetailsControllerIntegrationSpec extends AbstractRestIntegrationSpecificat
 
     def "Test Details Aggregation Controller - 403 "() {
         when:
-        MvcResult result = mockGet("/v1/details/products/$PRODUCT_ID?key=testkey1","Bearer `token`").andReturn()
+        MvcResult result = mockGet("/details/v1/products/$PRODUCT_ID?key=testkey1","Bearer `token`").andReturn()
 
         then:
         result.response.status == 403
@@ -78,7 +78,7 @@ class DetailsControllerIntegrationSpec extends AbstractRestIntegrationSpecificat
 
     def "Test Details Aggregation Controller - 401 "() {
         when:
-        MvcResult result = mockGet("/v1/details/products/$PRODUCT_ID?key=key1","Bearer `testtoken`").andReturn()
+        MvcResult result = mockGet("/details/v1/products/$PRODUCT_ID?key=key1","Bearer `testtoken`").andReturn()
 
         then:
         result.response.status == 401

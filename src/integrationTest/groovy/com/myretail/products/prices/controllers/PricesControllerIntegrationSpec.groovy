@@ -45,7 +45,7 @@ class PricesControllerIntegrationSpec extends AbstractRestIntegrationSpecificati
         }""" as String
 
         when:
-        MvcResult result = mockPost("/v1/prices/products/$PRODUCT_ID?key=testkey1","Bearer `testtoken`", newPrices).andReturn()
+        MvcResult result = mockPost("/prices/v1/products/$PRODUCT_ID?key=testkey1","Bearer `testtoken`", newPrices).andReturn()
 
         then:
         result.response.status == 201
@@ -76,7 +76,7 @@ class PricesControllerIntegrationSpec extends AbstractRestIntegrationSpecificati
         }""" as String
 
         when:
-        MvcResult result = mockGet("/v1/prices/products/$PRODUCT_ID?key=testkey1","Bearer `testtoken`").andReturn()
+        MvcResult result = mockGet("/prices/v1/products/$PRODUCT_ID?key=testkey1","Bearer `testtoken`").andReturn()
 
         then:
         result.response.status == 200
@@ -113,7 +113,7 @@ class PricesControllerIntegrationSpec extends AbstractRestIntegrationSpecificati
         }""" as String
 
         when:
-        MvcResult result = mockPut("/v1/prices/products/$PRODUCT_ID/price_types/current_price?key=testkey1","Bearer `testtoken`", request).andReturn()
+        MvcResult result = mockPut("/prices/v1/products/$PRODUCT_ID/price_types/current_price?key=testkey1","Bearer `testtoken`", request).andReturn()
 
         then:
         updatedCurrentPrice != savedPrices.prices.currentPrice.value
@@ -125,7 +125,7 @@ class PricesControllerIntegrationSpec extends AbstractRestIntegrationSpecificati
 
     def "Test Price Core Controller - Bad Request "() {
         when:
-        MvcResult result = mockGet("/v1/prices/products/ABC?key=testkey1","Bearer `testtoken`").andReturn()
+        MvcResult result = mockGet("/prices/v1/products/ABC?key=testkey1","Bearer `testtoken`").andReturn()
 
         then:
         result.response.status == 400

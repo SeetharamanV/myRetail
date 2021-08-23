@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping(path = ["/v1/prices"], produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping(path = ["/prices/v1"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class PricesController(private val pricesService: PricesService) {
 
     @GetMapping("/products/{productId}")

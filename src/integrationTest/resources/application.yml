@@ -14,10 +14,10 @@ myretail:
     api-key: testkey1
     authorization-token: Bearer `testtoken`
     prices:
-      url: http://localhost:8090/my_retail/v1/prices/products/
+      url: http://localhost:8090/my_retail/prices/v1/products/
       timeout: 10
     attributes:
-      url: http://localhost:8090/my_retail/v1/attributes/products/
+      url: http://localhost:8090/my_retail/attributes/v1/products/
       timeout: 10
   security:
     valid-api-keys:

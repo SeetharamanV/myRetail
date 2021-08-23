@@ -92,7 +92,7 @@ abstract class AbstractIntegrationSpecification extends Specification {
         }
     }
 
-    def savePricesDocument(PricesDocument document) {
+    PricesDocument savePricesDocument(PricesDocument document) {
         return mongoTemplate.save(document, COLLECTION)
     }
 }

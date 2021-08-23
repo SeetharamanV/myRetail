@@ -8,7 +8,7 @@ spring:
     time-zone: UTC
   data:
     mongodb:
-      uri: mongodb://username:password@localhost:27080/prices?authSource=admin
+      uri: mongodb://username:password@localhost:27081/prices?authSource=admin
 myretail:
   partner-apis:
     api-key: TOKENONE

@@ -1,6 +1,7 @@
 package com.myretail.products.prices.controllers
 
 import com.myretail.products.AbstractSpecification
+import com.myretail.products.prices.entities.Price
 import com.myretail.products.prices.entities.PricesRequest
 import com.myretail.products.prices.entities.PricesResponse
 import com.myretail.products.prices.services.PricesService
@@ -13,11 +14,11 @@ class PricesControllerSpec extends AbstractSpecification {
         def expectedPriceResponse = GroovyMock(PricesResponse)
 
         when:
-        def result = pricesController.getPricesByProductId(123)
+        def result = pricesController.getPricesByProductId(PRODUCT_ID)
 
         then:
         expectedPriceResponse == result
-        1 * pricesService.getPricesByProductId(123) >> expectedPriceResponse
+        1 * pricesService.getPricesByProductId(PRODUCT_ID) >> expectedPriceResponse
 
         0 * _
     }
@@ -28,11 +29,27 @@ class PricesControllerSpec extends AbstractSpecification {
         def expectedPriceResponse = GroovyMock(PricesResponse)
 
         when:
-        def result = pricesController.createPricesForProductId(123, request)
+        def result = pricesController.createPricesForProductId(PRODUCT_ID, request)
 
         then:
         expectedPriceResponse == result
-        1 * pricesService.createPricesForProduct(123, request) >> expectedPriceResponse
+        1 * pricesService.createPricesForProduct(PRODUCT_ID, request) >> expectedPriceResponse
+
+        0 * _
+    }
+
+    def "Prices Controller test - update current_price for product id - happy path."() {
+        given:
+        def request = GroovyMock(Price)
+        def priceType = "current_price"
+        def expectedPriceResponse = GroovyMock(PricesResponse)
+
+        when:
+        def result = pricesController.updatePricesForProductId(PRODUCT_ID, priceType, request)
+
+        then:
+        expectedPriceResponse == result
+        1 * pricesService.updatePricesForProduct(PRODUCT_ID, priceType, request) >> expectedPriceResponse
 
         0 * _
     }

@@ -36,11 +36,11 @@ abstract class AbstractRestIntegrationSpecification extends AbstractIntegrationS
                 .accept(MediaType.APPLICATION_JSON))
     }
 
-    def mockPut(String url, String putBody) {
+    def mockPut(String url, String authorization, String putBody) {
         return mockMvc.perform(put(url)
                 .content(putBody)
                 .contentType(MediaType.APPLICATION_JSON)
-                .header(AUTH_HEADER_NAME, AUTH_HEADER_VALUE)
+                .header(AUTH_HEADER_NAME, authorization)
                 .accept(MediaType.APPLICATION_JSON))
     }
 
@@ -50,7 +50,7 @@ abstract class AbstractRestIntegrationSpecification extends AbstractIntegrationS
                 .accept(MediaType.APPLICATION_JSON))
     }
 
-    def saveTestPrices() {
+    PricesDocument saveTestPrices() {
         PricesDocument pricesDocument = new PricesDocument(
                 null,
                 PRODUCT_ID,
@@ -69,6 +69,6 @@ abstract class AbstractRestIntegrationSpecification extends AbstractIntegrationS
                         )
                 )
         )
-        savePricesDocument(pricesDocument)
+        return savePricesDocument(pricesDocument)
     }
 }

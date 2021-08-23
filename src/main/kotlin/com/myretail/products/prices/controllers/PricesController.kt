@@ -22,7 +22,6 @@ class PricesController(private val pricesService: PricesService) {
     @GetMapping("/products/{productId}")
     fun getPricesByProductId(
         @PathVariable productId: Long
-//        ,@RequestParam("includes", defaultValue = "[]") includes: List<PriceType>
     ): PricesResponse? {
         return pricesService.getPricesByProductId(productId)
     }

@@ -23,3 +23,6 @@ myretail:
     valid-api-keys:
       - testkey1
     valid-authorization-token: Bearer `testtoken`
+mongock:
+  change-logs-scan-package:
+    - com.myretail.products.changelogs

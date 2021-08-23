@@ -14,11 +14,11 @@ class DetailsControllerSpec extends AbstractSpecification {
         def expectedDetailDocument = new DetailsDocument(123, "Acme Glue", new Price(BigDecimal.ONE.toDouble(), "USD"))
 
         when:
-        def result = detailsController.getDetailsByProductId(123)
+        def result = detailsController.getDetailsByProductId(123, "name, attribute")
 
         then:
         expectedDetailDocument == result
-        1 * detailsService.getDetailsForProductId(123) >> expectedDetailDocument
+        1 * detailsService.getDetailsForProductId(123, "name, attribute") >> expectedDetailDocument
 
         0 * _
     }

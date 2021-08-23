@@ -203,7 +203,7 @@ jacocoTestCoverageVerification {
             element = 'BUNDLE'
             limit {
                 counter = 'BRANCH'
-                minimum = 0.65
+                minimum = 0.80
             }
         }
     }

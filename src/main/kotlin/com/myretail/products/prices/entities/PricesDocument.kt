@@ -34,3 +34,20 @@ data class Price(
     val value: Double,
     val currencyCode: String
 )
+
+enum class PricesDocumentFields(val fieldName: String) {
+    PRODUCT_ID("productId"),
+}
+
+enum class PricesDocumentFieldsAndFailureCode(val fieldName: String, val fieldPath: String, val event: String, val failureCode: String) {
+
+    UPDATE_CURRENT_PRICE("current_price", "prices.currentPrice", "UPDATE_CURRENT_PRICE", "Couldn't update CURRENT PRICE"),
+    UPDATE_REGULAR_PRICE("regular_price", "prices.regularPrice", "UPDATE_REGULAR_PRICE", "Couldn't update REGULAR PRICE"),
+    UPDATE_INITIAL_PRICE("initial_price", "prices.initialPrice", "UPDATE_INITIAL_PRICE", "Couldn't update INITIAL PRICE");
+
+    companion object {
+        fun getPricesDocumentFieldsAndFailureCode(priceType: String): PricesDocumentFieldsAndFailureCode {
+            return values().first { it.fieldName.toUpperCase() == priceType.toUpperCase() }
+        }
+    }
+}

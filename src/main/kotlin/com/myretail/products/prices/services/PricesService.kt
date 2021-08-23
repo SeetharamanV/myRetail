@@ -1,6 +1,8 @@
 package com.myretail.products.prices.services
 
+import com.myretail.products.prices.entities.Price
 import com.myretail.products.prices.entities.PricesDocument
+import com.myretail.products.prices.entities.PricesDocumentFieldsAndFailureCode
 import com.myretail.products.prices.entities.PricesRequest
 import com.myretail.products.prices.entities.PricesResponse
 import com.myretail.products.prices.repositories.PricesRepository
@@ -17,5 +19,18 @@ class PricesService(private val pricesRepository: PricesRepository) {
         pricesRequest: PricesRequest
     ): PricesResponse? {
         return pricesRepository.save(PricesDocument(productId = productId, prices = pricesRequest.prices)).toPricesResponse()
+    }
+
+    fun updatePricesForProduct(
+        productId: Long,
+        priceType: String,
+        price: Price
+    ): PricesResponse? {
+        val pricesDocumentFields = PricesDocumentFieldsAndFailureCode.getPricesDocumentFieldsAndFailureCode(priceType)
+        return pricesRepository.updateSectionsInPricesDocument(
+            productId,
+            mapOf(pricesDocumentFields.fieldPath to price),
+            pricesDocumentFields
+        ).toPricesResponse()
     }
 }

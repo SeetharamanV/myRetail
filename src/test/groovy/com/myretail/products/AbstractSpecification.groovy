@@ -11,4 +11,6 @@ abstract class AbstractSpecification extends Specification {
                     .stringLengthRange(5, 30)
                     .collectionSizeRange(1, 10)
     )
+
+    protected def PRODUCT_ID = 123
 }

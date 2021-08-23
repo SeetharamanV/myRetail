@@ -32,7 +32,7 @@ class AttributesControllerIntegrationSpec extends AbstractRestIntegrationSpecifi
         given:
         String expectedErrorResponse = """{
             "message":"Invalid attribute type passed for 'exclude'.",
-            "code":"PA-4000"
+            "code":"ATTRIBUTES-4000"
         }""" as String
 
         when:

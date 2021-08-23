@@ -24,7 +24,7 @@ class AttributeExclusionsHandlerSpec extends AbstractSpecification {
 
     def "Attribute Extractor - happy path."() {
         when:
-        def result = attributeExtractor.extractExclusions("name, department")
+        def result = attributeExtractor.extractExclusions("name, DEPARTMENT")
 
         then: "matches the excludes"
         [AttributeType.NAME, AttributeType.DEPARTMENT] == result
@@ -54,7 +54,7 @@ class AttributeExclusionsHandlerSpec extends AbstractSpecification {
         0 * _
     }
 
-    def "Attribute Apply exclusion - name+ department exclusions passed."() {
+    def "Attribute Apply exclusion - name + department exclusions passed."() {
         when:
         def attributes = new Attributes("Acme Glue", "Home", "pounds")
         def attributesDocument = new AttributesDocument(123, attributes)
@@ -63,6 +63,34 @@ class AttributeExclusionsHandlerSpec extends AbstractSpecification {
         then: "empty"
         !result.attributes.name
         !result.attributes.department
+        "pounds" == result.attributes.unitOfMeasure
+
+        0 * _
+    }
+
+    def "Attribute Apply exclusion - name + department + unit of measure exclusions passed."() {
+        when:
+        def attributes = new Attributes("Acme Glue", "Home", "pounds")
+        def attributesDocument = new AttributesDocument(123, attributes)
+        def result = attributeExtractor.applyExclusions(attributesDocument, [AttributeType.NAME, AttributeType.DEPARTMENT, AttributeType.UNIT_OF_MEASURE])
+
+        then: "empty"
+        !result.attributes.name
+        !result.attributes.department
+        !result.attributes.unitOfMeasure
+
+        0 * _
+    }
+
+    def "Attribute Apply exclusion - random exclusions passed."() {
+        when:
+        def attributes = new Attributes("Acme Glue", "Home", "pounds")
+        def attributesDocument = new AttributesDocument(123, attributes)
+        def result = attributeExtractor.applyExclusions(attributesDocument, ["random"])
+
+        then: "empty"
+        "Acme Glue" == result.attributes.name
+        "Home" == result.attributes.department
         "pounds" == result.attributes.unitOfMeasure
 
         0 * _

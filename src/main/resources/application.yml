@@ -13,7 +13,7 @@ spring:
     time-zone: UTC
   data:
     mongodb:
-      uri: mongodb://username:password@localhost:27080/prices?authSource=admin
+      uri: mongodb://localhost:27080/test
 myretail:
   partner-apis:
     api-key: TOKENONE
@@ -30,4 +30,6 @@ myretail:
       - TOKENTWO
       - TOKENTHREE
     valid-authorization-token: Bearer `sometoken`
-
+mongock:
+  change-logs-scan-package:
+    - com.myretail.products.changelogs

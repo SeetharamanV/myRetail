@@ -75,6 +75,11 @@ dependencies {
     // Mongo
     compile "org.springframework.boot:spring-boot-starter-data-mongodb"
 
+    //Mongock
+    compile("com.github.cloudyrock.mongock:mongock-bom:${mongock_version}")
+    compile("com.github.cloudyrock.mongock:mongock-spring-v5:${mongock_version}")
+    compile("com.github.cloudyrock.mongock:mongodb-springdata-v2-driver:${mongock_version}")
+
     compile("org.slf4j:slf4j-api:1.7.32")
     compile("org.slf4j:slf4j-log4j12:1.7.32")
 

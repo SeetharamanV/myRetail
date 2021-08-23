@@ -46,7 +46,8 @@ class PricesUpdateRepositoryImpl(
             mongoTemplate.updateFirst(query, update, DOCUMENT_CLASS)
             mongoTemplate.findOne(query, DOCUMENT_CLASS)
         } catch (ex: Exception) {
-            logger.error(" Error:{}, Query:{}, Update:{}, exception:{}",
+            logger.error(
+                "Error:{}, Query:{}, Update:{}, exception:{}",
                 pricesDocumentFieldsAndFailureCode.failureCode,
                 query.toString(),
                 update.toString(),

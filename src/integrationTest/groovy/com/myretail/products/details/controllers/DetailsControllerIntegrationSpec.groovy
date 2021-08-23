@@ -8,6 +8,7 @@ import static net.javacrumbs.jsonunit.JsonAssert.assertJsonEquals
 class DetailsControllerIntegrationSpec extends AbstractRestIntegrationSpecification {
 
     private static Long PRODUCT_ID = 123L
+    private static String EXCLUDES = "parm1"
 
     def "Test Details Aggregation Controller - Get Happy "() {
         given:
@@ -31,7 +32,7 @@ class DetailsControllerIntegrationSpec extends AbstractRestIntegrationSpecificat
             "unit_of_measure": "pounds"
           }
         }"""
-        stub(getAttributesUrl(PRODUCT_ID), "GET", attributeResponse, 200)
+        stub(getAttributesUrl(PRODUCT_ID, EXCLUDES), "GET", attributeResponse, 200)
 
         and:
         def expectedResponse = """{
@@ -45,7 +46,7 @@ class DetailsControllerIntegrationSpec extends AbstractRestIntegrationSpecificat
 
         when:
         MvcResult result = mockGet(
-                "/v1/details/products/$PRODUCT_ID?key=testkey1",
+                "/v1/details/products/$PRODUCT_ID?excludes=$EXCLUDES&key=testkey1",
                 "Bearer `testtoken`"
             ).andReturn()
 
@@ -55,7 +56,7 @@ class DetailsControllerIntegrationSpec extends AbstractRestIntegrationSpecificat
 
         and:
         1L == getWireMockCallCount(getPricesUrl(PRODUCT_ID), "GET")
-        1L == getWireMockCallCount(getAttributesUrl(PRODUCT_ID), "GET")
+        1L == getWireMockCallCount(getAttributesUrl(PRODUCT_ID, EXCLUDES), "GET")
 
         0 * _
     }

@@ -6,6 +6,7 @@ import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -14,9 +15,9 @@ class DetailsController(private val detailsService: DetailsService) {
 
     @GetMapping("/products/{productId}")
     fun getDetailsByProductId(
-        @PathVariable productId: Long
+        @PathVariable productId: Long,
+        @RequestParam("excludes", defaultValue = "") excludes: String
     ): DetailsDocument {
-        return detailsService.getDetailsForProductId(productId)
-//        return DetailsDocument(productId, "Acme Glue", Price(BigDecimal.ONE.toDouble(), "USD"))
+        return detailsService.getDetailsForProductId(productId, excludes)
     }
 }

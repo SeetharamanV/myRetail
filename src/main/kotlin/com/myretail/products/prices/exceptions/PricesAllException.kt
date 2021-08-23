@@ -1,6 +1,7 @@
 package com.myretail.products.prices.exceptions
 
 import com.myretail.products.prices.exceptions.PricesExceptionConstants.PRICES_DATABASE_EXCEPTION
+import com.myretail.products.prices.exceptions.PricesExceptionConstants.PRICES_DUPLICATE_RECORD_EXCEPTION
 import com.myretail.products.prices.exceptions.PricesExceptionConstants.PRICES_NOT_FOUND
 
 open class PricesException(
@@ -25,3 +26,6 @@ open class PricesNotFoundException(code: String) :
 
 open class PricesDatabaseException(code: String = PRICES_DATABASE_EXCEPTION.code, message: String = PRICES_DATABASE_EXCEPTION.message, cause: Throwable? = null) :
     PricesException(code = code, message = message, cause = cause)
+
+open class PricesDuplicateRecordException(cause: Throwable?) :
+    PricesException(code = PRICES_DUPLICATE_RECORD_EXCEPTION.code, message = PRICES_DUPLICATE_RECORD_EXCEPTION.message, cause = cause)

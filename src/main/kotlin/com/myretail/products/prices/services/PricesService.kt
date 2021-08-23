@@ -5,11 +5,16 @@ import com.myretail.products.prices.entities.PricesDocument
 import com.myretail.products.prices.entities.PricesDocumentFieldsAndFailureCode
 import com.myretail.products.prices.entities.PricesRequest
 import com.myretail.products.prices.entities.PricesResponse
+import com.myretail.products.prices.exceptions.PricesDuplicateRecordException
 import com.myretail.products.prices.repositories.PricesRepository
+import org.slf4j.LoggerFactory
+import org.springframework.dao.DuplicateKeyException
 import org.springframework.stereotype.Service
 
 @Service
 class PricesService(private val pricesRepository: PricesRepository) {
+    private val logger = LoggerFactory.getLogger(this::class.java)
+
     fun getPricesByProductId(productId: Long): PricesResponse? {
         return pricesRepository.findByProductId(productId)?.toPricesResponse()
     }
@@ -18,7 +23,12 @@ class PricesService(private val pricesRepository: PricesRepository) {
         productId: Long,
         pricesRequest: PricesRequest
     ): PricesResponse? {
-        return pricesRepository.save(PricesDocument(productId = productId, prices = pricesRequest.prices)).toPricesResponse()
+        try {
+            val savedPricesDocument = pricesRepository.save(PricesDocument(productId = productId, prices = pricesRequest.prices))
+            return savedPricesDocument.toPricesResponse()
+        } catch (duplicateKeyException: DuplicateKeyException) {
+            throw PricesDuplicateRecordException(duplicateKeyException)
+        }
     }
 
     fun updatePricesForProduct(
@@ -31,6 +41,6 @@ class PricesService(private val pricesRepository: PricesRepository) {
             productId,
             mapOf(pricesDocumentFields.fieldPath to price),
             pricesDocumentFields
-        ).toPricesResponse()
+        )?.toPricesResponse()
     }
 }

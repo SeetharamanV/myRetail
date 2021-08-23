@@ -11,7 +11,7 @@ spring:
       uri: mongodb://username:password@localhost:27081/prices?authSource=admin
 myretail:
   partner-apis:
-    api-key: TOKENONE
+    api-key: testkey1
     authorization-token: Bearer `testtoken`
     prices:
       url: http://localhost:8090/my_retail/v1/prices/products/

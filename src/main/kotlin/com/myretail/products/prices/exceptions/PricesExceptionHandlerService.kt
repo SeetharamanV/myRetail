@@ -12,6 +12,10 @@ class PricesExceptionHandlerService : ResponseEntityExceptionHandler() {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handlePricesBadRequestException(ex: PricesBadRequestException) = ex.toPricesExceptionResponse()
 
+    @ExceptionHandler(value = [PricesDuplicateRecordException::class])
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handlePricesDuplicateRecordException(ex: PricesDuplicateRecordException) = ex.toPricesExceptionResponse()
+
     @ExceptionHandler(value = [PricesNotFoundException::class])
     @ResponseStatus(HttpStatus.NOT_FOUND)
     fun handlePricesNotFoundException(ex: PricesNotFoundException) = ex.toPricesExceptionResponse()

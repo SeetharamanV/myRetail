@@ -25,14 +25,14 @@ interface PricesUpdateRepository {
         productId: Long,
         updateMap: Map<String, Any?>,
         pricesDocumentFieldsAndFailureCode: PricesDocumentFieldsAndFailureCode
-    ): PricesDocument
+    ): PricesDocument?
 }
 
 class PricesUpdateRepositoryImpl(
     private val mongoTemplate: MongoTemplate
 ) : PricesUpdateRepository {
     private val logger = LoggerFactory.getLogger(this::class.java)
-    override fun updateSectionsInPricesDocument(productId: Long, updateMap: Map<String, Any?>, pricesDocumentFieldsAndFailureCode: PricesDocumentFieldsAndFailureCode): PricesDocument {
+    override fun updateSectionsInPricesDocument(productId: Long, updateMap: Map<String, Any?>, pricesDocumentFieldsAndFailureCode: PricesDocumentFieldsAndFailureCode): PricesDocument? {
         val query = Query()
         query.addCriteria(Criteria.where(PricesDocumentFields.PRODUCT_ID.fieldName).isEqualTo(productId))
         if (0L == mongoTemplate.count(query, DOCUMENT_CLASS)) {

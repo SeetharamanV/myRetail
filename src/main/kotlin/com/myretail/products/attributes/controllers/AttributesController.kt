@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping(path = ["/v1/attributes"], produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping(path = ["/attributes/v1"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class AttributesController(private val attributesService: AttributesService) {
 
     @GetMapping("/products/{productId}")

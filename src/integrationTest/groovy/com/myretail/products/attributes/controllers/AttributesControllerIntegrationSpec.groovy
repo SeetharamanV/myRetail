@@ -19,7 +19,7 @@ class AttributesControllerIntegrationSpec extends AbstractRestIntegrationSpecifi
         }""" as String
 
         when: "Get attributes for an product"
-        MvcResult result = mockGet("/v1/attributes/products/1233?key=testkey1","Bearer `testtoken`").andReturn()
+        MvcResult result = mockGet("/attributes/v1/products/1233?key=testkey1","Bearer `testtoken`").andReturn()
 
         then:
         result.response.status == 200
@@ -36,7 +36,7 @@ class AttributesControllerIntegrationSpec extends AbstractRestIntegrationSpecifi
         }""" as String
 
         when:
-        MvcResult result = mockGet("/v1/attributes/products/1233?excludes=test&key=testkey1","Bearer `testtoken`").andReturn()
+        MvcResult result = mockGet("/attributes/v1/products/1233?excludes=test&key=testkey1","Bearer `testtoken`").andReturn()
 
         then:
         result.response.status == 400
@@ -55,7 +55,7 @@ class AttributesControllerIntegrationSpec extends AbstractRestIntegrationSpecifi
         }""" as String
 
         when:
-        MvcResult result = mockGet("/v1/attributes/products/1233?excludes=name, department&key=testkey1","Bearer `testtoken`").andReturn()
+        MvcResult result = mockGet("/attributes/v1/products/1233?excludes=name, department&key=testkey1","Bearer `testtoken`").andReturn()
 
         then:
         result.response.status == 200

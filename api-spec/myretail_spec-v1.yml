@@ -1,0 +1,81 @@
+swagger: '2.0'
+info:
+  description: MyRetail API
+  title: MyRetail API
+  version: '1.0'
+host: 'localhost:9091'
+basePath: /my_retail
+tags:
+  - name: details-controller
+    description: Details Controller
+paths:
+  '/details/v1/products/{product_id}':
+    get:
+      tags:
+        - details-controller
+      summary: getDetailsByProductIdAndLocationId
+      operationId: getDetailsByProductIdAndLocationIdUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: "key"
+          in: "query"
+          description: Valid api key.
+          required: true
+          type: "string"
+        - name: "authorization"
+          in: "header"
+          description: Valid authorization bearer token.
+          required: true
+          type: "string"
+        - name: product_id
+          in: path
+          description: product id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DetailsResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthenticated
+        '403':
+          description: Forbidden
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+
+definitions:
+  DetailsResponse:
+    type: object
+    required:
+      - product_id
+      - name
+      - current_price
+    properties:
+      product_id:
+        type: integer
+        example: 7438248
+      name:
+        type: string
+        example: Acme Glue
+      current_price:
+        $ref: '#/definitions/Price'
+    title: Details Response
+  Price:
+    type: object
+    required:
+      - value
+      - currency_code
+    properties:
+      value:
+        type: number
+        example: 13.99
+      currency_code:
+        type: string
+        example: USD
+    title: Price

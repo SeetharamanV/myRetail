@@ -13,7 +13,7 @@ spring:
     time-zone: UTC
   data:
     mongodb:
-      uri: mongodb://localhost:27080/test
+      uri: mongodb://localhost:27080/someplacetest
 myretail:
   partner-apis:
     api-key: TOKENONE
@@ -33,3 +33,12 @@ myretail:
 mongock:
   change-logs-scan-package:
     - com.myretail.products.changelogs
+
+---
+spring:
+  profiles: prod
+  data:
+    mongodb:
+      uri: mongodb://localhost:27080/test
+---
+#  ./gradlew bootRun --args='--spring.profiles.active=profile --server.port=port'

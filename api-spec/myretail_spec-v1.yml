@@ -15,8 +15,8 @@ paths:
     get:
       tags:
         - details-controller
-      summary: getDetailsByProductIdAndLocationId
-      operationId: getDetailsByProductIdAndLocationIdUsingGET
+      summary: Get details by ProductId
+      operationId: getDetailsByProductIdUsingGET
       produces:
         - application/json
       parameters:

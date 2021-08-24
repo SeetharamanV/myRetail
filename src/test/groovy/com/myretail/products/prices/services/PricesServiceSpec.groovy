@@ -2,16 +2,18 @@ package com.myretail.products.prices.services
 
 import com.myretail.products.AbstractSpecification
 import com.myretail.products.prices.entities.AllPrices
-import com.myretail.products.prices.entities.Price
 import com.myretail.products.prices.entities.PricesDocument
 import com.myretail.products.prices.entities.PricesDocumentFieldsAndFailureCode
 import com.myretail.products.prices.entities.PricesRequest
+import com.myretail.products.prices.exceptions.PricesExceptionConstants
+import com.myretail.products.prices.exceptions.PricesNotFoundException
 import com.myretail.products.prices.repositories.PricesRepository
 
 class PricesServiceSpec extends AbstractSpecification {
     def pricesRepository = Mock(PricesRepository)
     def pricesService = new PricesService(pricesRepository)
-    def "Prices Services test - get by product id - happy path."() {
+
+    def "Get by product id - happy path."() {
         given:
         def pricesDocument = easyRandom.nextObject(PricesDocument)
         def expectedPriceResponse = pricesDocument.toPricesResponse()
@@ -22,6 +24,18 @@ class PricesServiceSpec extends AbstractSpecification {
         then:
         expectedPriceResponse == result
         1 * pricesRepository.findByProductId(PRODUCT_ID) >> pricesDocument
+
+        0 * _
+    }
+
+    def "Get by product id - not found."() {
+        when:
+        pricesService.getPricesByProductId(PRODUCT_ID)
+
+        then:
+        1 * pricesRepository.findByProductId(PRODUCT_ID) >> null
+        PricesNotFoundException caught = thrown(PricesNotFoundException)
+        caught.message == PricesExceptionConstants.PRICES_NOT_FOUND.message
 
         0 * _
     }

@@ -21,7 +21,7 @@ open class PricesException(
 open class PricesBadRequestException(cause: Throwable?) :
     PricesException(code = "Bad request", message = "Oh no bad request", cause = cause)
 
-open class PricesNotFoundException(code: String) :
+open class PricesNotFoundException(code: String = PRICES_NOT_FOUND.code) :
     PricesException(code = code, message = PRICES_NOT_FOUND.message)
 
 open class PricesDatabaseException(code: String = PRICES_DATABASE_EXCEPTION.code, message: String = PRICES_DATABASE_EXCEPTION.message, cause: Throwable? = null) :

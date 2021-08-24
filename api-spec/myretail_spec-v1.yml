@@ -1,22 +1,22 @@
 swagger: '2.0'
 info:
   version: '1.0'
-  description: My Retail Products Price Core API
-  title: My Retail Products Price Core API
+  description: My Retail API
+  title: My Retail API
 host: localhost:9091
 basePath: /my_retail
 tags:
   - name: details-controller
-    description: Details Controller
+    description: Details Aggregator Controller
   - name: prices-controller
-    description: Prices Controller
+    description: Prices Core Controller
 paths:
   '/details/v1/products/{product_id}':
     get:
       tags:
         - details-controller
-      summary: getDetailsByProductIdAndLocationId
-      operationId: getDetailsByProductIdAndLocationIdUsingGET
+      summary: Get details by ProductId
+      operationId: getDetailsByProductIdUsingGET
       produces:
         - application/json
       parameters:
@@ -155,3 +155,4 @@ definitions:
         type: integer
         format: int64
     title: PricesDocument
+    

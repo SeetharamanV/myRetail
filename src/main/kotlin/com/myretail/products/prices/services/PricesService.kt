@@ -6,6 +6,7 @@ import com.myretail.products.prices.entities.PricesDocumentFieldsAndFailureCode
 import com.myretail.products.prices.entities.PricesRequest
 import com.myretail.products.prices.entities.PricesResponse
 import com.myretail.products.prices.exceptions.PricesDuplicateRecordException
+import com.myretail.products.prices.exceptions.PricesNotFoundException
 import com.myretail.products.prices.repositories.PricesRepository
 import org.slf4j.LoggerFactory
 import org.springframework.dao.DuplicateKeyException
@@ -15,8 +16,9 @@ import org.springframework.stereotype.Service
 class PricesService(private val pricesRepository: PricesRepository) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    fun getPricesByProductId(productId: Long): PricesResponse? {
-        return pricesRepository.findByProductId(productId)?.toPricesResponse()
+    fun getPricesByProductId(productId: Long): PricesResponse {
+        val productDocument = pricesRepository.findByProductId(productId) ?: throw PricesNotFoundException()
+        return productDocument.toPricesResponse()
     }
 
     fun createPricesForProduct(

@@ -22,7 +22,7 @@ class PricesController(private val pricesService: PricesService) {
     @GetMapping("/products/{productId}")
     fun getPricesByProductId(
         @PathVariable productId: Long
-    ): PricesResponse? {
+    ): PricesResponse {
         return pricesService.getPricesByProductId(productId)
     }
 

@@ -42,13 +42,12 @@ class PricesServiceSpec extends AbstractSpecification {
 
     def "Prices Services test - create prices for product id - happy path."() {
         given:
-        def prices = easyRandom.nextObject(AllPrices)
-        def request = new PricesRequest(prices)
-        def priceDocument = new PricesDocument(null, PRODUCT_ID, prices)
+        def request = easyRandom.nextObject(PricesRequest)
+        def priceDocument = new PricesDocument(null, request.productId, request.prices)
         def expectedPriceResponse = priceDocument.toPricesResponse()
 
         when:
-        def result = pricesService.createPricesForProduct(PRODUCT_ID, request)
+        def result = pricesService.createPricesForProduct(request)
 
         then:
         expectedPriceResponse == result

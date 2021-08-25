@@ -22,11 +22,10 @@ class PricesService(private val pricesRepository: PricesRepository) {
     }
 
     fun createPricesForProduct(
-        productId: Long,
         pricesRequest: PricesRequest
     ): PricesResponse? {
         try {
-            val savedPricesDocument = pricesRepository.save(PricesDocument(productId = productId, prices = pricesRequest.prices))
+            val savedPricesDocument = pricesRepository.save(PricesDocument(productId = pricesRequest.productId, prices = pricesRequest.prices))
             return savedPricesDocument.toPricesResponse()
         } catch (duplicateKeyException: DuplicateKeyException) {
             throw PricesDuplicateRecordException(duplicateKeyException)

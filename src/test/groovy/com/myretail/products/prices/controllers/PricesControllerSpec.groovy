@@ -25,15 +25,15 @@ class PricesControllerSpec extends AbstractSpecification {
 
     def "Prices Controller test - create prices for product id - happy path."() {
         given:
-        def request = GroovyMock(PricesRequest)
+        def request = easyRandom.nextObject(PricesRequest)
         def expectedPriceResponse = GroovyMock(PricesResponse)
 
         when:
-        def result = pricesController.createPricesForProductId(PRODUCT_ID, request)
+        def result = pricesController.createPricesForProductId(request)
 
         then:
         expectedPriceResponse == result
-        1 * pricesService.createPricesForProduct(PRODUCT_ID, request) >> expectedPriceResponse
+        1 * pricesService.createPricesForProduct(request) >> expectedPriceResponse
 
         0 * _
     }

@@ -32,6 +32,13 @@ class DatabaseChangeLog {
         collection.createIndex(inventoryRemovalIdIndex, IndexOptions().unique(true))
     }
 
+/*    @ChangeSet(order = "003", id = "initialCreateTimestampTTLIndex", author = "SV")
+    fun initialCreateTimestampTTLIndex(db: MongoDatabase) {
+        val createTimestampIndex = Document(mapOf("createTimestamp" to 1))
+        val collection = db.getCollection(COLLECTION)
+        collection.createIndex(createTimestampIndex, IndexOptions().expireAfter(120, TimeUnit.DAYS))
+    }*/
+
     companion object {
 
         const val COLLECTION = "prices"

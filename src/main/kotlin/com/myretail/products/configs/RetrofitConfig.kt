@@ -44,6 +44,11 @@ class RetrofitConfig(
             .addInterceptor { chain -> buildChain(chain = chain) }
             .build()
 
+/*        client = client.newBuilder()
+                .addInterceptor(RetryInterceptor(3))
+                .build()
+*/
+
         client = client.newBuilder()
             .eventListener(
                 OkHttpMetricsEventListener
@@ -81,4 +86,17 @@ class RetrofitConfig(
         private const val AUTH_HEADER = "authorization"
         private const val API_KEY_PATH = "key"
     }
+
+/*    class RetryInterceptor(private val retry: Int): Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val request = chain.request()
+            var response = chain.proceed(request)
+            var tryCount = 0
+            while (!response.isSuccessful && tryCount < retry){
+                tryCount++
+                response = chain.proceed(request)
+            }
+            return response
+        }
+    }*/
 }

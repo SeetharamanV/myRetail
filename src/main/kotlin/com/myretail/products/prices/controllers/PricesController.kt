@@ -26,7 +26,7 @@ class PricesController(private val pricesService: PricesService) {
         return pricesService.getPricesByProductId(productId)
     }
 
-    @PostMapping("/products")
+    @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     fun createPricesForProductId(
         @RequestBody pricesRequest: PricesRequest

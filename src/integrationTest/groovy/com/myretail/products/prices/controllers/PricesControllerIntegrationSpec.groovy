@@ -46,7 +46,7 @@ class PricesControllerIntegrationSpec extends AbstractRestIntegrationSpecificati
         }""" as String
 
         when:
-        MvcResult result = mockPost("/prices/v1/products?key=testkey1","Bearer `testtoken`", newPrices).andReturn()
+        MvcResult result = mockPost("/prices/v1?key=testkey1","Bearer `testtoken`", newPrices).andReturn()
 
         then:
         result.response.status == 201

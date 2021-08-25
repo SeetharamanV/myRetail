@@ -26,13 +26,12 @@ class PricesController(private val pricesService: PricesService) {
         return pricesService.getPricesByProductId(productId)
     }
 
-    @PostMapping("/products/{productId}")
+    @PostMapping("/products")
     @ResponseStatus(code = HttpStatus.CREATED)
     fun createPricesForProductId(
-        @PathVariable productId: Long,
         @RequestBody pricesRequest: PricesRequest
     ): PricesResponse? {
-        return pricesService.createPricesForProduct(productId, pricesRequest)
+        return pricesService.createPricesForProduct(pricesRequest)
     }
 
     @PutMapping("/products/{productId}/price_types/{priceType}")

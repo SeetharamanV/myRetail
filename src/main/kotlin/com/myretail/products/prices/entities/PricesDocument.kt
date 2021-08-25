@@ -10,11 +10,14 @@ data class PricesDocument(
     @Id val _id: ObjectId? = null,
     val productId: Long,
     val prices: AllPrices
+// ,val createTimestamp: Date = Date.from(Instant.now())
+// ,val version: Short = 1
 ) {
     fun toPricesResponse(): PricesResponse = PricesResponse(this.productId, this.prices)
 }
 
 data class PricesRequest(
+    val productId: Long,
     val prices: AllPrices
 )
 
@@ -33,7 +36,13 @@ data class AllPrices(
 data class Price(
     val value: Double,
     val currencyCode: String
+//    ,val audit: Audit
 )
+
+/*data class Audit(
+    val user: String,
+    val eventTimestamp: Date = Date.from(Instant.now())
+)*/
 
 enum class PricesDocumentFields(val fieldName: String) {
     PRODUCT_ID("productId"),

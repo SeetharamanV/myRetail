@@ -10,6 +10,7 @@ class PricesControllerIntegrationSpec extends AbstractRestIntegrationSpecificati
     def "Create Prices for a product id."() {
         given:
         String newPrices = """{
+            "product_id":$PRODUCT_ID,
             "prices":{
                 "current_price":{
                     "value":1.99,
@@ -45,7 +46,7 @@ class PricesControllerIntegrationSpec extends AbstractRestIntegrationSpecificati
         }""" as String
 
         when:
-        MvcResult result = mockPost("/prices/v1/products/$PRODUCT_ID?key=testkey1","Bearer `testtoken`", newPrices).andReturn()
+        MvcResult result = mockPost("/prices/v1/products?key=testkey1","Bearer `testtoken`", newPrices).andReturn()
 
         then:
         result.response.status == 201
